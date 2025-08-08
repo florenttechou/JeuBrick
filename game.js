@@ -128,15 +128,30 @@ function drawBricks() {
         ctx.fillStyle = b.texture;
         ctx.fillRect(brickX, brickY, brickWidth, brickHeight);
 
+        // Dégradés pour accentuer le relief
+        const reliefV = ctx.createLinearGradient(brickX, brickY, brickX, brickY + brickHeight);
+        reliefV.addColorStop(0, "rgba(255,255,255,0.6)");
+        reliefV.addColorStop(0.5, "rgba(255,255,255,0)");
+        reliefV.addColorStop(1, "rgba(0,0,0,0.6)");
+        ctx.fillStyle = reliefV;
+        ctx.fillRect(brickX, brickY, brickWidth, brickHeight);
+
+        const reliefH = ctx.createLinearGradient(brickX, brickY, brickX + brickWidth, brickY);
+        reliefH.addColorStop(0, "rgba(255,255,255,0.2)");
+        reliefH.addColorStop(0.5, "rgba(255,255,255,0)");
+        reliefH.addColorStop(1, "rgba(0,0,0,0.2)");
+        ctx.fillStyle = reliefH;
+        ctx.fillRect(brickX, brickY, brickWidth, brickHeight);
+
         const hueMatch = /hsl\((\d+),/.exec(b.color);
         if (hueMatch) {
           const h = hueMatch[1];
-          ctx.fillStyle = `hsl(${h}, 100%, 70%)`;
-          ctx.fillRect(brickX, brickY, brickWidth, 4);
-          ctx.fillRect(brickX, brickY, 4, brickHeight);
-          ctx.fillStyle = `hsl(${h}, 100%, 30%)`;
-          ctx.fillRect(brickX, brickY + brickHeight - 4, brickWidth, 4);
-          ctx.fillRect(brickX + brickWidth - 4, brickY, 4, brickHeight);
+          ctx.fillStyle = `hsl(${h}, 100%, 85%)`;
+          ctx.fillRect(brickX, brickY, brickWidth, 3);
+          ctx.fillRect(brickX, brickY, 3, brickHeight);
+          ctx.fillStyle = `hsl(${h}, 100%, 15%)`;
+          ctx.fillRect(brickX, brickY + brickHeight - 3, brickWidth, 3);
+          ctx.fillRect(brickX + brickWidth - 3, brickY, 3, brickHeight);
         }
         ctx.restore();
       }
