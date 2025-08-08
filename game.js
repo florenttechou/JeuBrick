@@ -10,6 +10,7 @@ const canvas  = document.getElementById('gameCanvas');
 const ctx     = canvas.getContext('2d');
 const width   = canvas.width;
 const height  = canvas.height;
+const explosionSound = document.getElementById('explosionSound');
 
 // --- Paramètres de jeu ---
 const paddleWidth  = 100;
@@ -179,6 +180,8 @@ function collisionDetection() {
 
           // Explosion
           createExplosion(ballX, ballY, b.color);
+          explosionSound.currentTime = 0;
+          explosionSound.play();
 
           if (score === brickRowCount * brickColumnCount) {
             alert("Félicitations, vous avez gagné !");
