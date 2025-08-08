@@ -11,6 +11,7 @@ const ctx     = canvas.getContext('2d');
 const width   = canvas.width;
 const height  = canvas.height;
 const explosionSound = document.getElementById('explosionSound');
+const startButton     = document.getElementById('startBtn');
 
 // --- Paramètres de jeu ---
 const paddleWidth  = 100;
@@ -26,7 +27,8 @@ const brickWidth       = 70;
 const brickHeight      = 20;
 const brickPadding     = 10;
 const brickOffsetTop   = 50;
-const brickOffsetLeft  = 55;
+const brickTotalWidth  = brickColumnCount * brickWidth + (brickColumnCount - 1) * brickPadding;
+const brickOffsetLeft  = (width - brickTotalWidth) / 2;
 
 // --- État du joueur ---
 let score = 0;
@@ -125,6 +127,17 @@ function drawBricks() {
         ctx.save();
         ctx.fillStyle = b.texture;
         ctx.fillRect(brickX, brickY, brickWidth, brickHeight);
+
+        const hueMatch = /hsl\((\d+),/.exec(b.color);
+        if (hueMatch) {
+          const h = hueMatch[1];
+          ctx.fillStyle = `hsl(${h}, 100%, 70%)`;
+          ctx.fillRect(brickX, brickY, brickWidth, 4);
+          ctx.fillRect(brickX, brickY, 4, brickHeight);
+          ctx.fillStyle = `hsl(${h}, 100%, 30%)`;
+          ctx.fillRect(brickX, brickY + brickHeight - 4, brickWidth, 4);
+          ctx.fillRect(brickX + brickWidth - 4, brickY, 4, brickHeight);
+        }
         ctx.restore();
       }
     }
@@ -252,5 +265,14 @@ function draw() {
 }
 
 // --- Initialisation ---
-initBricks();
-draw();
+function startGame() {
+  startButton.style.display = 'none';
+  initBricks();
+  explosionSound.play().then(() => {
+    explosionSound.pause();
+    explosionSound.currentTime = 0;
+  });
+  draw();
+}
+
+startButton.addEventListener('click', startGame);

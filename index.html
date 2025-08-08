@@ -15,10 +15,20 @@
     background: #111;
     border: 1px solid #0ff;
   }
+  #startBtn {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 10px 20px;
+    font-size: 20px;
+    cursor: pointer;
+  }
 </style>
 </head>
 <body>
 <canvas id="gameCanvas" width="800" height="600"></canvas>
+<button id="startBtn">Commencer</button>
 <audio id="explosionSound" src="explosion_brick.mp3" preload="auto"></audio>
 <script src="game.js"></script>
 </body>
