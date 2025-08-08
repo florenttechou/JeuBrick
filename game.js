@@ -128,6 +128,14 @@ function drawBricks() {
         ctx.fillStyle = b.texture;
         ctx.fillRect(brickX, brickY, brickWidth, brickHeight);
 
+        // Dégradé vertical pour le relief
+        const relief = ctx.createLinearGradient(brickX, brickY, brickX, brickY + brickHeight);
+        relief.addColorStop(0, "rgba(255,255,255,0.3)");
+        relief.addColorStop(0.5, "rgba(255,255,255,0)");
+        relief.addColorStop(1, "rgba(0,0,0,0.3)");
+        ctx.fillStyle = relief;
+        ctx.fillRect(brickX, brickY, brickWidth, brickHeight);
+
         const hueMatch = /hsl\((\d+),/.exec(b.color);
         if (hueMatch) {
           const h = hueMatch[1];
